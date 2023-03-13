@@ -20,11 +20,9 @@ export default function Home({ featuredGallery }) {
             {console.log(featuredGallery[0].photos.images)}
             {featuredGallery[0].photos.images.map((image) => {
               {
-                console.log("data: ", image.asset.url);
+                console.log("data: ", image.asset.metadata.dimensions.width);
               }
-              return (
-                <img src={urlFor(image).width(200).auto("format").url()} />
-              );
+              return <ImageGridItem image={image} />;
             })}
           </div>
         )}
@@ -61,9 +59,45 @@ export async function getStaticProps() {
   };
 }
 
-// client.fetch(query, params).then((images) => {
-//   console.log("Bikes with more than one seat:");
-//   images.forEach((image) => {
-//     console.log(`${image.url} `);
-//   });
-// });
+export function ImageGridItem({ image }) {
+  const width = image.asset.metadata.dimensions.width;
+  const height = image.asset.metadata.dimensions.height;
+  if (width > height) {
+    return (
+      <img
+        className="horizontal"
+        src={urlFor(image).width(200).fit("max").url()}
+        alt={image.alt}
+      />
+    );
+  } else if (height > width) {
+    return (
+      <img
+        className="vertical"
+        src={urlFor(image).width(200).fit("max").url()}
+        alt={image.alt}
+      />
+    );
+  } else {
+    return (
+      <img className="grid-item" src={urlFor(image).url()} alt={image.alt} />
+    );
+  }
+  // const style = {
+  //   gridColumnEnd: `span ${getSpanEstimate(
+  //     image.asset.metadata.dimensions.width
+  //   )}`,
+  //   gridRowEnd: `span ${getSpanEstimate(
+  //     image.asset.metadata.dimensions.height
+  //   )}`,
+  // };
+}
+
+export function getSpanEstimate(size) {
+  if (size > 5000) {
+    console.log("big ", size);
+    return 2;
+  }
+  console.log("small ", size);
+  return 1;
+}
