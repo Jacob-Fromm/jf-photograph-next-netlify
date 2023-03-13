@@ -14,20 +14,21 @@ export default function Home({ featuredGallery }) {
       </Head>
 
       <main>
-        <Header title="Welcome to my app!" />
-        <h1>hello world</h1>
+        <Header title="Photo Page" />
         {featuredGallery.length > 0 && (
-          <ul>
-            {featuredGallery[0].map((image) => {
+          <div className="photo-container">
+            {console.log(featuredGallery[0].photos.images)}
+            {featuredGallery[0].photos.images.map((image) => {
               {
-                console.log(image);
+                console.log("data: ", image.asset.url);
               }
-              <li key={image._key}>
-                <img src={urlFor(image).width(200).url()} />
-              </li>;
+              return (
+                <img src={urlFor(image).width(200).auto("format").url()} />
+              );
             })}
-          </ul>
+          </div>
         )}
+        {!featuredGallery.length}
       </main>
 
       <Footer />
@@ -43,7 +44,14 @@ function urlFor(source) {
 
 export async function getStaticProps() {
   const featuredGallery = await client.fetch(
-    `*[_type == "project" && title == "Europe 2021"].photos.images`
+    `*[_type == "project" && title == "Europe 2021"]{
+      photos{
+        images[]{
+          ...,
+          asset->
+        }
+      }
+    }`
   );
 
   return {
