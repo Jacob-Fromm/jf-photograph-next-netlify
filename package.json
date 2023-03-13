@@ -8,9 +8,13 @@
     "export": "next export"
   },
   "dependencies": {
+    "@portabletext/react": "^2.0.2",
+    "@sanity/image-url": "^1.0.2",
     "cypress": "^10.0.3",
-    "next": "^12.1.5",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "next": "^13.2.4",
+    "next-sanity": "^4.1.5",
+    "node-fetch": "^3.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

@@ -1,7 +1,7 @@
 import {format, parseISO} from 'date-fns'
 
 export default {
-  name: 'sampleProject',
+  name: 'project',
   title: 'Project',
   type: 'document',
   fields: [
@@ -21,30 +21,14 @@ export default {
       },
     },
     {
-      name: 'publishedAt',
-      title: 'Published at',
-      description: 'You can use this field to schedule projects where you show them',
-      type: 'datetime',
-    },
-    {
       name: 'excerpt',
       title: 'Excerpt',
-      type: 'simplePortableText',
-    },
-    {
-      name: 'startedAt',
-      title: 'Started at',
-      type: 'datetime',
-    },
-    {
-      name: 'endedAt',
-      title: 'Ended at',
-      type: 'datetime',
+      type: 'text',
     },
     {
       name: 'mainImage',
       title: 'Main image',
-      type: 'figure',
+      type: 'image',
     },
     {
       name: 'photos',
@@ -60,29 +44,25 @@ export default {
     {
       name: 'body',
       title: 'Body',
-      type: 'projectPortableText',
+      type: 'text',
     },
     {
       name: 'relatedProjects',
       title: 'Related projects',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'sampleProject'}}],
+      of: [{type: 'reference', to: {type: 'project'}}],
     },
   ],
   preview: {
     select: {
       title: 'title',
-      publishedAt: 'publishedAt',
       slug: 'slug',
       media: 'mainImage',
     },
-    prepare({title = 'No title', publishedAt, slug = {}, media}) {
-      const dateSegment = format(parseISO(publishedAt), 'yyyy/MM')
-      const path = `/${dateSegment}/${slug.current}/`
+    prepare({title = 'No title', slug = {}, media}) {
       return {
         title,
         media,
-        subtitle: publishedAt ? path : 'Missing publishing date',
       }
     },
   },
