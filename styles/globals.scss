@@ -14,7 +14,7 @@ body {
 }
 
 main {
-  padding: 5rem 0;
+  margin: 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -30,7 +30,6 @@ code {
 }
 
 .container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,82 +38,168 @@ code {
 
 .photo-container {
   width: 100vw;
-  height: 100vh;
-  margin: 1em;
+  max-height: 100%;
+  position: relative;
+  // margin: 1em;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  img {
-    padding: 0.5rem;
+  // top: 20%;
+  padding: 0.5rem;
+  // margin: 0 auto;
+
+  .photo-div:last-child {
+    flex-grow: 10;
+  }
+
+  @media (max-aspect-ratio: 1/1) {
+    .photo-div {
+      height: 30vh;
+    }
+  }
+
+  // Short screens
+
+  @media (max-height: 480px) {
+    .photo-div {
+      height: 80vh;
+    }
+  }
+
+  // Smaller screens in portrait
+
+  @media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+    .photo-container {
+      flex-direction: row;
+    }
+
+    .photo-div {
+      height: auto;
+      width: 100%;
+    }
+    img {
+      width: 100%;
+      max-height: 75vh;
+      min-width: 0;
+    }
   }
 }
 
-.slider-container {
-  max-width: 50vw;
-  max-height: 50vh;
+.photo-div {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+  flex-grow: 1;
+  margin: 0.5rem;
+  img {
+    max-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+  }
+  transition: 0.5s;
+  &:hover {
+    // box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+    transform: scale(1.02);
+  }
+  .middle {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    transition: 0.5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .photo-text {
+    background-color: #04aa6d;
+    overflow-wrap: break-word;
+    color: white;
+    font-size: 16px;
+    padding: 0.5rem;
+    width: 50%;
+    align-self: center;
+  }
+  &:hover .gallery-photo {
+    opacity: 0.3;
+  }
+  &:hover .middle {
+    opacity: 1;
+  }
 }
 
-.slick-arrow.slick-next {
-  color: red;
-}
-
-// .scroll-title {
-//   font-family: "Carter One";
+// .container:hover .overlay {
+//   opacity: 1;
 // }
-// .scroll-container {
-//   margin-top: 50px;
+
+// .text {
+//   color: white;
+//   font-size: 20px;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   -webkit-transform: translate(-50%, -50%);
+//   -ms-transform: translate(-50%, -50%);
+//   transform: translate(-50%, -50%);
 //   text-align: center;
 // }
 
-// .scroll-image-grid {
-//   display: grid;
-//   grid-gap: 10px;
-//   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-//   grid-auto-rows: minmax(50px, auto);
+.with-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  align-items: flex-start;
+}
 
-//   .scroll-image-item:nth-child(5n) {
-//     grid-column-end: span 2;
-//   }
+.with-sidebar > :first-child {
+  flex-basis: 10vw;
+  flex-grow: 1;
+}
 
-//   img {
-//     display: flex;
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//   }
-// }
+.with-sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: 50%;
+}
 
-// .row {
+.sidebar {
+  /* ↓ The width when the sidebar _is_ a sidebar */
+  border: 2px dotted blue;
+  flex-basis: 5rem;
+  flex-grow: 1;
+  padding: 1em;
+}
+
+// BASIC
+
+// ul {
 //   display: flex;
 //   flex-wrap: wrap;
-//   padding: 0 4px;
 // }
 
-// /* Create four equal columns that sits next to each other */
-// .column {
-//   flex: 25%;
-//   max-width: 25%;
-//   padding: 0 4px;
-//   img {
-//     margin-top: 8px;
-//     vertical-align: middle;
-//     width: 100%;
-//   }
+// li {
+//   height: 40vh;
+//   flex-grow: 1;
 // }
 
-// /* Responsive layout - makes a two column-layout instead of four columns */
-// @media screen and (max-width: 800px) {
-//   .column {
-//     flex: 50%;
-//     max-width: 50%;
-//   }
+// li:last-child {
+//   // There's no science in using "10" here. In all my testing, this delivered the best results.
+//   flex-grow: 10;
 // }
 
-// /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-// @media screen and (max-width: 600px) {
-//   .column {
-//     flex: 100%;
-//     max-width: 100%;
-//   }
+// img {
+//   max-height: 100%;
+//   min-width: 100%;
+//   object-fit: cover;
+//   vertical-align: bottom;
 // }
+
+// ADVANCED
+
+// Portrait

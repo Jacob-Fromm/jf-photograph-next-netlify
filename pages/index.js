@@ -8,6 +8,7 @@ import { useState } from "react";
 import ImageGrid from "@components/imageGrid.jsx";
 import ImageCarousel from "@components/ImageCarousel.jsx";
 import SimpleSlider from "@components/SimpleSlider.jsx";
+import SideBar from "@components/Sidebar.jsx";
 
 export default function Home({ featuredGallery }) {
   const [featuredImages, setFeaturedImages] = useState([featuredGallery]);
@@ -35,13 +36,26 @@ export default function Home({ featuredGallery }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header title="Photo Page" />
-        {featuredGallery.length > 0 && (
+        <Header title="Jake Fromm Photography" />
+        <div className="with-sidebar">
+          <SideBar />
           <div className="photo-container">
-            <ImageCarousel images={featuredGallery[0].photos.images} />
-            {/* <SimpleSlider /> */}
+            {featuredGallery.length > 0 &&
+              featuredGallery[0].photos.images.map((image) => {
+                return (
+                  <div className="photo-div" key={image._key}>
+                    <img
+                      className="gallery-photo"
+                      src={urlFor(image).height(600).fit("clip").url()}
+                    />
+                    <div className="middle">
+                      <div className="photo-text">{image.asset.url}</div>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
-        )}
+        </div>
       </main>
 
       <Footer />
