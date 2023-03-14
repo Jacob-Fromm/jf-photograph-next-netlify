@@ -5,9 +5,6 @@ import { client } from "../studio/util/client.js";
 import imageUrlBuilder from "@sanity/image-url";
 import React from "react";
 import { useState } from "react";
-import ImageGrid from "@components/imageGrid.jsx";
-import ImageCarousel from "@components/ImageCarousel.jsx";
-import SimpleSlider from "@components/SimpleSlider.jsx";
 import SideBar from "@components/Sidebar.jsx";
 
 export default function Home({ featuredGallery }) {
