@@ -4,29 +4,44 @@ import Footer from "@components/Footer";
 import { client } from "../studio/util/client.js";
 import imageUrlBuilder from "@sanity/image-url";
 import React from "react";
+import { useState } from "react";
+import ImageGrid from "@components/imageGrid.jsx";
+import ImageCarousel from "@components/ImageCarousel.jsx";
+import SimpleSlider from "@components/SimpleSlider.jsx";
 
 export default function Home({ featuredGallery }) {
+  const [featuredImages, setFeaturedImages] = useState([featuredGallery]);
+  const [horizontals, setHorizontals] = useState([]);
+  const [verticals, setVerticals] = useState([]);
+
+  const organizeImages = (photos) => {
+    photos.map((image) => {
+      let width = image.asset.metadata.dimensions.width;
+      let height = image.asset.metadata.dimensions.height;
+      if (width > height) {
+        horizontals.push(image);
+      } else if (height > width) {
+        verticals.push(image);
+      }
+    });
+  };
+
+  organizeImages(featuredGallery[0].photos.images);
+  console.log(featuredImages);
   return (
     <div className="container">
       <Head>
         <title>Jake Fromm Photography</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <Header title="Photo Page" />
         {featuredGallery.length > 0 && (
           <div className="photo-container">
-            {console.log(featuredGallery[0].photos.images)}
-            {featuredGallery[0].photos.images.map((image) => {
-              {
-                console.log("data: ", image.asset.metadata.dimensions.width);
-              }
-              return <ImageGridItem image={image} />;
-            })}
+            <ImageCarousel images={featuredGallery[0].photos.images} />
+            {/* <SimpleSlider /> */}
           </div>
         )}
-        {!featuredGallery.length}
       </main>
 
       <Footer />
@@ -59,45 +74,28 @@ export async function getStaticProps() {
   };
 }
 
-export function ImageGridItem({ image }) {
-  const width = image.asset.metadata.dimensions.width;
-  const height = image.asset.metadata.dimensions.height;
-  if (width > height) {
-    return (
-      <img
-        className="horizontal"
-        src={urlFor(image).width(200).fit("max").url()}
-        alt={image.alt}
-      />
-    );
-  } else if (height > width) {
-    return (
-      <img
-        className="vertical"
-        src={urlFor(image).width(200).fit("max").url()}
-        alt={image.alt}
-      />
-    );
-  } else {
-    return (
-      <img className="grid-item" src={urlFor(image).url()} alt={image.alt} />
-    );
-  }
-  // const style = {
-  //   gridColumnEnd: `span ${getSpanEstimate(
-  //     image.asset.metadata.dimensions.width
-  //   )}`,
-  //   gridRowEnd: `span ${getSpanEstimate(
-  //     image.asset.metadata.dimensions.height
-  //   )}`,
-  // };
-}
-
-export function getSpanEstimate(size) {
-  if (size > 5000) {
-    console.log("big ", size);
-    return 2;
-  }
-  console.log("small ", size);
-  return 1;
-}
+// export function ImageGridItem({ image }) {
+//   let width = image.asset.metadata.dimensions.width;
+//   let height = image.asset.metadata.dimensions.height;
+//   if (width > height) {
+//     return (
+//       <img
+//         className="horizontal"
+//         src={urlFor(image).width(200).fit("scale").url()}
+//         alt={image.alt}
+//       />
+//     );
+//   } else if (height > width) {
+//     return (
+//       <img
+//         className="vertical"
+//         src={urlFor(image).width(200).fit("scale").url()}
+//         alt={image.alt}
+//       />
+//     );
+//   } else {
+//     return (
+//       <img className="grid-item" src={urlFor(image).url()} alt={image.alt} />
+//     );
+//   }
+// }
