@@ -12,20 +12,20 @@ export default function Home({ featuredGallery }) {
   const [horizontals, setHorizontals] = useState([]);
   const [verticals, setVerticals] = useState([]);
 
-  const organizeImages = (photos) => {
-    photos.map((image) => {
-      let width = image.asset.metadata.dimensions.width;
-      let height = image.asset.metadata.dimensions.height;
-      if (width > height) {
-        horizontals.push(image);
-      } else if (height > width) {
-        verticals.push(image);
-      }
-    });
-  };
+  // const organizeImages = (photos) => {
+  //   photos.map((image) => {
+  //     let width = image.asset.metadata.dimensions.width;
+  //     let height = image.asset.metadata.dimensions.height;
+  //     if (width > height) {
+  //       horizontals.push(image);
+  //     } else if (height > width) {
+  //       verticals.push(image);
+  //     }
+  //   });
+  // };
 
-  organizeImages(featuredGallery[0].photos.images);
-  console.log(featuredImages);
+  // organizeImages(featuredGallery[0].photos.images);
+  console.log(featuredImages[0]);
   return (
     <div className="container">
       <Head>
@@ -38,15 +38,18 @@ export default function Home({ featuredGallery }) {
           <SideBar />
           <div className="photo-container">
             {featuredGallery.length > 0 &&
-              featuredGallery[0].photos.images.map((image) => {
+              featuredGallery.map((project) => {
                 return (
-                  <div className="photo-div" key={image._key}>
+                  <div className="photo-div" key={project.mainImage.id}>
                     <img
                       className="gallery-photo"
-                      src={urlFor(image).height(600).fit("clip").url()}
+                      src={urlFor(project.mainImage)
+                        .height(600)
+                        .fit("clip")
+                        .url()}
                     />
                     <div className="middle">
-                      <div className="photo-text">{image.asset.url}</div>
+                      <h3 className="photo-text">{project.title}</h3>
                     </div>
                   </div>
                 );
@@ -68,14 +71,15 @@ function urlFor(source) {
 
 export async function getStaticProps() {
   const featuredGallery = await client.fetch(
-    `*[_type == "project" && title == "Europe 2021"]{
-      photos{
-        images[]{
-          ...,
-          asset->
-        }
-      }
-    }`
+    // `*[_type == "project" && title == "Europe 2021"]{
+    //   photos{
+    //     images[]{
+    //       ...,
+    //       asset->
+    //     }
+    //   }
+    // }`
+    `*[_type=='project']{title,mainImage{asset->}}`
   );
 
   return {
