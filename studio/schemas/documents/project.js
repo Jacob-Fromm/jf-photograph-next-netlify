@@ -46,12 +46,6 @@ export default {
       title: 'Body',
       type: 'text',
     },
-    {
-      name: 'relatedProjects',
-      title: 'Related projects',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'project'}}],
-    },
   ],
   preview: {
     select: {
