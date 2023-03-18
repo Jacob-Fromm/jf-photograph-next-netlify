@@ -12,11 +12,11 @@ export default function Gallery({ gallery }) {
 export async function getStaticPaths() {
   const galleries = await client.fetch(`*[_type=='project']`);
   return {
-    paths: galleries.map((gallery) => {
-      const gallerySlug = gallery.slug.current;
+    paths: galleries.map((collection) => {
+      const gallery = collection.slug.current;
       return {
         params: {
-          gallerySlug,
+          gallery,
         },
       };
     }),
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const gallerySlug = params.gallerySlug;
+  const gallery = params.gallery;
   const galleries = await client.fetch(`*[_type=='project']`);
   return {
     props: {
