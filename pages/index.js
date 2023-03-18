@@ -6,6 +6,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import React from "react";
 import { useState } from "react";
 import SideBar from "@components/Sidebar.jsx";
+import Link from "next/link";
 
 export default function Home({ featuredGallery }) {
   const [featuredImages, setFeaturedImages] = useState([featuredGallery]);
@@ -40,7 +41,7 @@ export default function Home({ featuredGallery }) {
             {featuredGallery.length > 0 &&
               featuredGallery.map((project) => {
                 return (
-                  <div className="photo-div" key={project.mainImage.id}>
+                  <div className="photo-div" key={project.mainImage.asset._id}>
                     <img
                       className="gallery-photo"
                       src={urlFor(project.mainImage)
