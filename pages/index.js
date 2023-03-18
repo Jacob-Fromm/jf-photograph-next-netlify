@@ -8,8 +8,8 @@ import { useState } from "react";
 import SideBar from "@components/Sidebar.jsx";
 import Link from "next/link";
 
-export default function Home({ featuredGallery }) {
-  const [featuredImages, setFeaturedImages] = useState([featuredGallery]);
+export default function Home({ featuredGalleries }) {
+  const [featuredImages, setFeaturedImages] = useState([featuredGalleries]);
   const [horizontals, setHorizontals] = useState([]);
   const [verticals, setVerticals] = useState([]);
 
@@ -25,7 +25,7 @@ export default function Home({ featuredGallery }) {
   //   });
   // };
 
-  // organizeImages(featuredGallery[0].photos.images);
+  // organizeImages(featuredGalleries[0].photos.images);
   console.log(featuredImages[0]);
   return (
     <div className="container">
@@ -36,10 +36,10 @@ export default function Home({ featuredGallery }) {
       <main>
         <Header title="Jake Fromm Photography" />
         <div className="with-sidebar">
-          <SideBar />
+          <SideBar galleries={featuredGalleries} />
           <div className="photo-container">
-            {featuredGallery.length > 0 &&
-              featuredGallery.map((project) => {
+            {featuredGalleries.length > 0 &&
+              featuredGalleries.map((project) => {
                 return (
                   <div className="photo-div" key={project.mainImage.asset._id}>
                     <img
@@ -50,7 +50,13 @@ export default function Home({ featuredGallery }) {
                         .url()}
                     />
                     <div className="middle">
-                      <h3 className="photo-text">{project.title}</h3>
+                      <h3 className="photo-text">
+                        <Link
+                          href={`/${encodeURIComponent(project.slug.current)}`}
+                        >
+                          {project.title}
+                        </Link>
+                      </h3>
                     </div>
                   </div>
                 );
@@ -71,21 +77,13 @@ function urlFor(source) {
 }
 
 export async function getStaticProps() {
-  const featuredGallery = await client.fetch(
-    // `*[_type == "project" && title == "Europe 2021"]{
-    //   photos{
-    //     images[]{
-    //       ...,
-    //       asset->
-    //     }
-    //   }
-    // }`
-    `*[_type=='project']{title,mainImage{asset->}}`
+  const featuredGalleries = await client.fetch(
+    `*[_type=='project']{title,slug,mainImage{asset->}}`
   );
 
   return {
     props: {
-      featuredGallery,
+      featuredGalleries,
     },
   };
 }
