@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function SideBar({ galleries }) {
   console.log("props in sidebar", galleries);
   //   const titles = galleries.map((gallery) => {
@@ -6,7 +8,13 @@ export default function SideBar({ galleries }) {
   return (
     <div className="sidebar">
       {galleries.map((gallery) => {
-        return <h3 key={gallery.slug.current}>{gallery.title}</h3>;
+        return (
+          <h3 key={gallery.slug.current}>
+            <Link href={`/${encodeURIComponent(gallery.slug.current)}`}>
+              {gallery.title}
+            </Link>
+          </h3>
+        );
       })}
     </div>
   );
