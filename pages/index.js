@@ -41,24 +41,19 @@ export default function Home({ featuredGalleries }) {
             {featuredGalleries.length > 0 &&
               featuredGalleries.map((project) => {
                 return (
-                  <div className="photo-div" key={project.mainImage.asset._id}>
+                  <Link
+                    className="photo-div"
+                    key={project.mainImage.asset._id}
+                    href={`/${encodeURIComponent(project.slug.current)}`}
+                  >
                     <img
                       className="gallery-photo"
-                      src={urlFor(project.mainImage)
-                        .height(600)
-                        .fit("clip")
-                        .url()}
+                      src={urlFor(project.mainImage).url()}
                     />
                     <div className="middle">
-                      <h3 className="photo-text">
-                        <Link
-                          href={`/${encodeURIComponent(project.slug.current)}`}
-                        >
-                          {project.title}
-                        </Link>
-                      </h3>
+                      <h3 className="photo-text">{project.title}</h3>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
           </div>

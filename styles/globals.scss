@@ -5,8 +5,12 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-style: normal;
 }
 
 * {
@@ -29,6 +33,14 @@ code {
   font-family: Menlo, Monaco, Lucida Console, Courier New, monospace;
 }
 
+.sidebar a {
+  color: #9c9c9c;
+  &:hover {
+    color: #000;
+  }
+  text-decoration: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -37,8 +49,8 @@ code {
 }
 
 .photo-container {
-  width: 100vw;
-  max-height: 100%;
+  // width: 100vw;
+  // max-height: 100%;
   position: relative;
   // margin: 1em;
   display: flex;
@@ -67,7 +79,7 @@ code {
 
   // Smaller screens in portrait
 
-  @media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+  @media (max-aspect-ratio: 1/1) and (max-width: 800px) {
     .photo-container {
       flex-direction: row;
     }
@@ -89,9 +101,11 @@ code {
   position: relative;
   align-items: center;
   justify-content: center;
-  height: 40vh;
+  width: 30vw;
   flex-grow: 1;
   margin: 0.5rem;
+  color: #000;
+  text-decoration: none;
   img {
     max-height: 100%;
     min-width: 100%;
@@ -99,10 +113,7 @@ code {
     vertical-align: bottom;
   }
   transition: 0.5s;
-  &:hover {
-    // box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
-    transform: scale(1.02);
-  }
+
   .middle {
     display: flex;
     flex-direction: column;
@@ -117,12 +128,16 @@ code {
     -ms-transform: translate(-50%, -50%);
     text-align: center;
   }
-  .photo-text {
-    overflow-wrap: break-word;
-    font-size: xx-large;
+  .photo-text a {
+    overflow-wrap: normal;
+    font-size: large;
     padding: 0.5rem;
     width: 50%;
     align-self: center;
+
+    // &:hover {
+    //   text-decoration: underline;
+    // }
   }
   &:hover .gallery-photo {
     opacity: 0.3;
@@ -172,6 +187,105 @@ code {
   flex-basis: 5rem;
   flex-grow: 1;
   padding: 1em;
+}
+
+// Image Gallery Overrides
+.slick-slider {
+  height: 75vh;
+  width: 75vw;
+}
+.slick-list {
+  height: 100%;
+}
+.slick-track {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  div {
+    margin-left: 10em;
+    margin-right: 10em;
+  }
+}
+.slick-slide,
+.slick-active {
+  border: 2px dotted blue;
+  width: 30vw;
+  width: 20em;
+  img {
+    height: 50vh;
+    // width: 100%;
+  }
+}
+.slick-prev,
+.slick-next {
+  color: blue;
+  background-color: red;
+  background-blend-mode: multiply;
+  &::after {
+    color: blue;
+    background-color: red;
+    background-blend-mode: multiply;
+  }
+}
+
+// Carousel
+.carousel-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-wrapper {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-content-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-content {
+  display: flex;
+  transition: all 250ms linear;
+  -ms-overflow-style: none; /* hide scrollbar in IE and Edge */
+  scrollbar-width: none; /* hide scrollbar in Firefox */
+  height: 50vh;
+}
+
+/* hide scrollbar in webkit browser */
+.carousel-content::-webkit-scrollbar,
+.carousel-content::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-content > * {
+  width: 100%;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.left-arrow {
+  left: 24px;
+}
+
+.right-arrow {
+  right: 24px;
 }
 
 // BASIC
