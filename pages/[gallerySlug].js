@@ -4,7 +4,7 @@ import { client } from "../studio/util/client.js";
 import Carousel from "@components/Carousel.js";
 import imageUrlBuilder from "@sanity/image-url";
 import MasonryImageGallery from "@components/MasonryImageGallery.jsx";
-
+import Link from "next/link";
 export default function Gallery({ gallery }) {
   console.log(gallery[0]);
   return (
@@ -17,7 +17,10 @@ export default function Gallery({ gallery }) {
         // marginTop: 64,
       }}
     >
-      <h1>{gallery[0].title}</h1>
+      <Link href="/" style={{ color: `black`, textDecoration: `none` }}>
+        <h1>JAKE FROMM PHOTOGRAPHY</h1>
+      </Link>
+      <h2>{gallery[0].title}</h2>
       <MasonryImageGallery gallery={gallery[0].photos.images} />
       {/* <ImageGallery gallery={gallery[0].photos.images} /> */}
       {/* <AsNavFor gallery={gallery[0].photos.images} /> */}
