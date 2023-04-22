@@ -45,7 +45,7 @@ export default function Home({ featuredGalleries }) {
           featuredGalleries.length > 0 && (
             // mainImages.push(project.mainImage);
             // console.log("mainImages after push :", mainImages);
-            <div className="masonry-container" style={{ padding: `2em` }}>
+            <div className="masonry-container" style={{ padding: `1em` }}>
               <ResponsiveMasonry columnsCountBreakPoints={{ 300: 1 }}>
                 <Masonry gutter="0.5rem">
                   {featuredGalleries.map((project, i) => {
