@@ -2,22 +2,36 @@ import AsNavFor from "@components/AsNavFor.jsx";
 import ImageGallery from "@components/ImageGallery.jsx";
 import { client } from "../studio/util/client.js";
 import Carousel from "@components/Carousel.js";
+import imageUrlBuilder from "@sanity/image-url";
+import MasonryImageGallery from "@components/MasonryImageGallery.jsx";
 
 export default function Gallery({ gallery }) {
   console.log(gallery[0]);
   return (
     <div
       style={{
-        maxWidth: 1200,
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: 64,
+        padding: `0.5rem`,
+        // maxWidth: 1200,
+        // marginLeft: "auto",
+        // marginRight: "auto",
+        // marginTop: 64,
       }}
     >
       <h1>{gallery[0].title}</h1>
-      <ImageGallery gallery={gallery[0].photos.images} />
+      <MasonryImageGallery gallery={gallery[0].photos.images} />
+      {/* <ImageGallery gallery={gallery[0].photos.images} /> */}
       {/* <AsNavFor gallery={gallery[0].photos.images} /> */}
       {/* <Carousel images={gallery[0].photos.images} /> */}
+      {/* <div className="photo-container">
+        {gallery[0].photos.images.length > 0 &&
+          gallery[0].photos.images.map((image) => {
+            return (
+              <div className="photo-div">
+                <img className="gallery-photo" src={urlFor(image).url()} />
+              </div>
+            );
+          })} */}
+      {/* </div> */}
     </div>
   );
 }
@@ -49,4 +63,10 @@ export async function getStaticProps({ params }) {
       gallery,
     },
   };
+}
+
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+  return builder.image(source);
 }

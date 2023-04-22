@@ -11,6 +11,7 @@ body {
   letter-spacing: 1px;
   font-weight: 600;
   font-style: normal;
+  background-color: #ffffff;
 }
 
 * {
@@ -144,6 +145,62 @@ code {
   }
   &:hover .middle {
     opacity: 1;
+  }
+}
+
+.masonry-container {
+  padding: 0.5rem;
+}
+
+#lightbox {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  img {
+    width: auto;
+    max-width: 90%;
+    max-height: 75%;
+    position: relative;
+    bottom: 10%;
+  }
+}
+.lightbox-buttons {
+  // position: absolute;
+  // top: 1em;
+  // right: 1em;
+  border: none;
+  background-color: white;
+  transition: ease-in 0.5s;
+  cursor: pointer;
+  &:hover {
+    background-color: #ddd;
+    border-radius: 0.25em;
+  }
+}
+.arrow-buttons {
+  margin-left: 5em;
+  margin-right: 5em;
+  position: relative;
+  bottom: 10%;
+  transition: ease 0.3s;
+  width: 100%;
+  height: 75%;
+}
+
+#prev-button {
+  &:hover {
+    transform: translateX(-1rem);
+  }
+}
+#next-button {
+  &:hover {
+    transform: translateX(1rem);
   }
 }
 
