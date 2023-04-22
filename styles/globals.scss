@@ -176,7 +176,7 @@ code {
   // right: 1em;
   border: none;
   background-color: white;
-  transition: ease-in 0.5s;
+  transition: 0.3s;
   cursor: pointer;
   &:hover {
     background-color: #ddd;
@@ -184,8 +184,8 @@ code {
   }
 }
 .arrow-buttons {
-  margin-left: 5em;
-  margin-right: 5em;
+  // padding-left: 5em;
+  // padding-right: 5em;
   position: relative;
   bottom: 10%;
   transition: ease 0.3s;
@@ -195,11 +195,13 @@ code {
 
 #prev-button {
   &:hover {
+    background-color: white;
     transform: translateX(-1rem);
   }
 }
 #next-button {
   &:hover {
+    background-color: white;
     transform: translateX(1rem);
   }
 }
