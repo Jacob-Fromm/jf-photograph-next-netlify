@@ -14,20 +14,21 @@ export default function MasonryImageGallery({ gallery }) {
 
   useEffect(() => {
     const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key);
+      console.log("User pressed: ", event.key, "i :", data.i);
 
       if (event.key === "Escape") {
         event.preventDefault();
-
-        imgAction("escape");
+        return imgAction("escape");
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        return imgAction("prev-img");
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        return imgAction("next-img");
       }
     };
 
     document.addEventListener("keydown", keyDownHandler);
-
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
   }, []);
 
   const imgAction = (action) => {
