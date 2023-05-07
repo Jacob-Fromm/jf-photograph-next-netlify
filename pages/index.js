@@ -7,7 +7,6 @@ import React from "react";
 import { useState } from "react";
 import SideBar from "@components/Sidebar.jsx";
 import Link from "next/link";
-import MasonryImageGallery from "@components/MasonryImageGallery.jsx";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 export default function Home({ featuredGalleries }) {

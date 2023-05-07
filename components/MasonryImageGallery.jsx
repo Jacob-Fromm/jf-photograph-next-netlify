@@ -1,50 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { client } from "../studio/util/client.js";
 import imageUrlBuilder from "@sanity/image-url";
 
 export default function MasonryImageGallery({ gallery }) {
-  const [data, setData] = useState({ img: null, i: 0 });
+  const [data, setData] = useState(0);
+  const [modal, setModal] = useState(false);
 
-  const viewImage = (img, i) => {
-    console.log("viewImage props: ", img, i);
-    setData({ img, i });
-    console.log("data after setting in viewImage :", data);
+  const viewImage = (index) => {
+    setData(index);
+    setModal(true);
   };
-
+  const keyDownHandler = (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      return imgAction("escape");
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      return imgAction("prev-img");
+    } else if (event.key === "ArrowRight") {
+      console.log("listening to right arrow");
+      event.preventDefault();
+      return imgAction("next-img");
+    }
+  };
   useEffect(() => {
-    const keyDownHandler = (event) => {
-      console.log("User pressed: ", event.key, "i :", data.i);
-
-      if (event.key === "Escape") {
-        event.preventDefault();
-        return imgAction("escape");
-      } else if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        return imgAction("prev-img");
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        return imgAction("next-img");
-      }
-    };
-
     document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
   }, []);
 
   const imgAction = (action) => {
-    let i = data.i;
     if (action === "next-img") {
-      setData({ img: gallery[i + 1], i: i + 1 });
+      setData((i) => (i + 1 > gallery.length - 1 ? 0 : i + 1));
     } else if (action === "prev-img") {
-      setData({ img: gallery[i - 1], i: i - 1 });
+      setData((i) => (i - 1 < 0 ? gallery.length - 1 : i - 1));
     } else if (action === "escape") {
-      setData({ img: null, i: 0 });
+      setData(0);
+      setModal(false);
     }
   };
 
+  console.log("data outside functions: ", data);
   return (
     <>
-      {data.img && (
+      {modal && (
         <>
           <button
             onClick={() => imgAction("escape")}
@@ -66,7 +67,7 @@ export default function MasonryImageGallery({ gallery }) {
             >
               &#60;
             </button>
-            <img src={urlFor(data.img).url()} alt="" />
+            <img src={urlFor(gallery[data]).url()} alt="" />
             <button
               onClick={() => imgAction("next-img")}
               id="next-button"
@@ -86,7 +87,7 @@ export default function MasonryImageGallery({ gallery }) {
                 src={urlFor(image).url()}
                 style={{ width: "100%", display: "block", cursor: "pointer" }}
                 alt=""
-                onClick={() => viewImage(image, i)}
+                onClick={() => viewImage(i)}
               />
             ))}
           </Masonry>
